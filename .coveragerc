@@ -1,0 +1,12 @@
+[run]
+source = .
+omit = 
+    venv/*
+    project_base/*
+    manage.py
+    reviews/__init__.py
+    project/asgi.py
+    project/wsgi.py
+
+[report]
+show_missing = True

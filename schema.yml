@@ -1,0 +1,1830 @@
+openapi: 3.0.3
+info:
+  title: Court Manager
+  version: 1.0.0
+paths:
+  /api/login/:
+    post:
+      operationId: login_create
+      tags:
+      - login
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/register/:
+    post:
+      operationId: register_create
+      tags:
+      - register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/sport_facilities/:
+    get:
+      operationId: sport_facilities_list
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Facility'
+          description: ''
+    post:
+      operationId: sport_facilities_create
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facility'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Facility'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Facility'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facility'
+          description: ''
+  /api/sport_facilities/{facility_id}/address/:
+    get:
+      operationId: sport_facilities_address_retrieve
+      parameters:
+      - in: path
+        name: facility_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this facility.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+    post:
+      operationId: sport_facilities_address_create
+      parameters:
+      - in: path
+        name: facility_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this facility.
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Address'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Address'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+    put:
+      operationId: sport_facilities_address_update
+      parameters:
+      - in: path
+        name: facility_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this facility.
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Address'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Address'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+    patch:
+      operationId: sport_facilities_address_partial_update
+      parameters:
+      - in: path
+        name: facility_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this facility.
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAddress'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+  /api/sport_facilities/{facility_id}/courts/:
+    get:
+      operationId: sport_facilities_courts_list
+      parameters:
+      - in: path
+        name: facility_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this court.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Court'
+          description: ''
+    post:
+      operationId: sport_facilities_courts_create
+      parameters:
+      - in: path
+        name: facility_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this court.
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Court'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Court'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Court'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Court'
+          description: ''
+  /api/sport_facilities/{sport_facility_id}/:
+    get:
+      operationId: sport_facilities_retrieve
+      parameters:
+      - in: path
+        name: sport_facility_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this facility.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailedFacility'
+          description: ''
+    put:
+      operationId: sport_facilities_update
+      parameters:
+      - in: path
+        name: sport_facility_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this facility.
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DetailedFacility'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DetailedFacility'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DetailedFacility'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailedFacility'
+          description: ''
+    patch:
+      operationId: sport_facilities_partial_update
+      parameters:
+      - in: path
+        name: sport_facility_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this facility.
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDetailedFacility'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDetailedFacility'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDetailedFacility'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailedFacility'
+          description: ''
+  /api/sport_facilities/{sport_facility_id}/delete/:
+    delete:
+      operationId: sport_facilities_delete_destroy
+      parameters:
+      - in: path
+        name: sport_facility_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this facility.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/sport_facilities/courts/{court_id}/:
+    get:
+      operationId: sport_facilities_courts_retrieve
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this court.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Court'
+          description: ''
+    put:
+      operationId: sport_facilities_courts_update
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this court.
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Court'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Court'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Court'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Court'
+          description: ''
+    patch:
+      operationId: sport_facilities_courts_partial_update
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this court.
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCourt'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCourt'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCourt'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Court'
+          description: ''
+    delete:
+      operationId: sport_facilities_courts_destroy
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this court.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/sport_facilities/courts/{court_id}/holidays/:
+    get:
+      operationId: sport_facilities_courts_holidays_list
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this holiday.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Holiday'
+          description: ''
+    post:
+      operationId: sport_facilities_courts_holidays_create
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this holiday.
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Holiday'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Holiday'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Holiday'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Holiday'
+          description: ''
+  /api/sport_facilities/courts/{court_id}/non_operating_day/:
+    get:
+      operationId: sport_facilities_courts_non_operating_day_list
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this non operating day.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NonOperatingDays'
+          description: ''
+    post:
+      operationId: sport_facilities_courts_non_operating_day_create
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this non operating day.
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NonOperatingDays'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NonOperatingDays'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/NonOperatingDays'
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NonOperatingDays'
+          description: ''
+  /api/sport_facilities/courts/{court_id}/reviews/:
+    get:
+      operationId: sport_facilities_courts_reviews_list
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+          description: ''
+    post:
+      operationId: sport_facilities_courts_reviews_create
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Review'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Review'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: ''
+    put:
+      operationId: sport_facilities_courts_reviews_update
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Review'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Review'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: ''
+    patch:
+      operationId: sport_facilities_courts_reviews_partial_update
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedReview'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedReview'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: ''
+    delete:
+      operationId: sport_facilities_courts_reviews_destroy
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/sport_facilities/courts/{court_id}/reviews/{review_id}/:
+    get:
+      operationId: sport_facilities_courts_reviews_list_2
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: path
+        name: review_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+          description: ''
+    post:
+      operationId: sport_facilities_courts_reviews_create_2
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: path
+        name: review_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Review'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Review'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: ''
+    put:
+      operationId: sport_facilities_courts_reviews_update_2
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: path
+        name: review_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Review'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Review'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: ''
+    patch:
+      operationId: sport_facilities_courts_reviews_partial_update_2
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: path
+        name: review_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedReview'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedReview'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: ''
+    delete:
+      operationId: sport_facilities_courts_reviews_destroy_2
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: path
+        name: review_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/sport_facilities/courts/{court_id}/schedules/:
+    get:
+      operationId: sport_facilities_courts_schedules_list
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this schedule.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+          description: ''
+    post:
+      operationId: sport_facilities_courts_schedules_create
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this schedule.
+        required: true
+      tags:
+      - sport_facilities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Schedule'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Schedule'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+          description: ''
+  /api/sport_facilities/courts/{court_id}/schedules/{date}/:
+    get:
+      operationId: sport_facilities_courts_schedules_retrieve
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this court.
+        required: true
+      - in: path
+        name: date
+        schema:
+          type: string
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourtAvailableSchedulesSerializers'
+          description: ''
+  /api/sport_facilities/courts/holidays/{holiday_id}/:
+    delete:
+      operationId: sport_facilities_courts_holidays_destroy
+      parameters:
+      - in: path
+        name: holiday_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this holiday.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/sport_facilities/courts/non_operating_day/{non_operanting_day_id}/:
+    delete:
+      operationId: sport_facilities_courts_non_operating_day_destroy
+      parameters:
+      - in: path
+        name: non_operanting_day_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this non operating day.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/sport_facilities/courts/schedules/{schedule_id}/:
+    delete:
+      operationId: sport_facilities_courts_schedules_destroy
+      parameters:
+      - in: path
+        name: schedule_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this schedule.
+        required: true
+      tags:
+      - sport_facilities
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/users/:
+    get:
+      operationId: users_list
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/{user_id}/:
+    get:
+      operationId: users_retrieve
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetail'
+          description: ''
+    put:
+      operationId: users_update
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserDetail'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetail'
+          description: ''
+    patch:
+      operationId: users_partial_update
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserDetail'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetail'
+          description: ''
+    delete:
+      operationId: users_destroy
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/users/{user_id}/payments/:
+    get:
+      operationId: users_payments_list
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this payment information.
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentInformation'
+          description: ''
+  /api/users/{user_id}/payments/{payment_id}/:
+    get:
+      operationId: users_payments_retrieve
+      parameters:
+      - in: path
+        name: payment_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this payment information.
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInformation'
+          description: ''
+    delete:
+      operationId: users_payments_destroy
+      parameters:
+      - in: path
+        name: payment_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this payment information.
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/users/{user_id}/payments/register/:
+    post:
+      operationId: users_payments_register_create
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentInformation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PaymentInformation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PaymentInformation'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInformation'
+          description: ''
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        street:
+          type: string
+          maxLength: 60
+        number:
+          type: string
+          maxLength: 10
+        zipcode:
+          type: string
+          maxLength: 20
+        state:
+          type: string
+          maxLength: 20
+      required:
+      - id
+      - number
+      - state
+      - street
+      - zipcode
+    Court:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        sport_facility:
+          allOf:
+          - $ref: '#/components/schemas/FacilityBaseInfo'
+          readOnly: true
+        name:
+          type: string
+          maxLength: 127
+        capacity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        is_indoor:
+          type: boolean
+        price_by_hour:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        max_schedule_range_in_days:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        sport:
+          type: string
+          maxLength: 127
+        opening_hour:
+          type: string
+          format: time
+        closing_hour:
+          type: string
+          format: time
+      required:
+      - capacity
+      - closing_hour
+      - id
+      - max_schedule_range_in_days
+      - name
+      - opening_hour
+      - price_by_hour
+      - sport
+      - sport_facility
+    CourtAvailableSchedulesSerializers:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 127
+        available_hours:
+          type: string
+          readOnly: true
+        price_by_hour:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+      required:
+      - available_hours
+      - name
+      - price_by_hour
+    CourtInfoForReview:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 127
+        sport_facility:
+          allOf:
+          - $ref: '#/components/schemas/FacilityBaseInfo'
+          readOnly: true
+      required:
+      - name
+      - sport_facility
+    CourtInfoForSchedule:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 127
+        price_by_hour:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+      required:
+      - name
+      - price_by_hour
+    DetailedFacility:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserBaseInfo'
+          readOnly: true
+        name:
+          type: string
+          maxLength: 60
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone_number:
+          type: string
+          maxLength: 60
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Nested'
+          readOnly: true
+      required:
+      - address
+      - email
+      - id
+      - name
+      - phone_number
+      - user
+    Facility:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 60
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone_number:
+          type: string
+          maxLength: 60
+        address_id:
+          type: string
+          format: uuid
+          nullable: true
+          readOnly: true
+        user:
+          type: string
+          format: uuid
+          readOnly: true
+      required:
+      - address_id
+      - email
+      - id
+      - name
+      - phone_number
+      - user
+    FacilityBaseInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 60
+      required:
+      - name
+    Holiday:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        holiday:
+          type: string
+          format: date
+        court:
+          type: string
+          format: uuid
+          readOnly: true
+      required:
+      - court
+      - holiday
+      - id
+    Nested:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        street:
+          type: string
+          maxLength: 60
+        number:
+          type: string
+          maxLength: 10
+        zipcode:
+          type: string
+          maxLength: 20
+        state:
+          type: string
+          maxLength: 20
+      required:
+      - id
+      - number
+      - state
+      - street
+      - zipcode
+    NonOperatingDays:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        regular_day_off:
+          $ref: '#/components/schemas/RegularDayOffEnum'
+        court:
+          type: string
+          format: uuid
+          readOnly: true
+      required:
+      - court
+      - id
+    PatchedAddress:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        street:
+          type: string
+          maxLength: 60
+        number:
+          type: string
+          maxLength: 10
+        zipcode:
+          type: string
+          maxLength: 20
+        state:
+          type: string
+          maxLength: 20
+    PatchedCourt:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        sport_facility:
+          allOf:
+          - $ref: '#/components/schemas/FacilityBaseInfo'
+          readOnly: true
+        name:
+          type: string
+          maxLength: 127
+        capacity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        is_indoor:
+          type: boolean
+        price_by_hour:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        max_schedule_range_in_days:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        sport:
+          type: string
+          maxLength: 127
+        opening_hour:
+          type: string
+          format: time
+        closing_hour:
+          type: string
+          format: time
+    PatchedDetailedFacility:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserBaseInfo'
+          readOnly: true
+        name:
+          type: string
+          maxLength: 60
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone_number:
+          type: string
+          maxLength: 60
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Nested'
+          readOnly: true
+    PatchedReview:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserBaseInfo'
+          readOnly: true
+        court:
+          allOf:
+          - $ref: '#/components/schemas/CourtInfoForReview'
+          readOnly: true
+        rating:
+          type: integer
+          maximum: 10
+          minimum: 1
+        review:
+          type: string
+          maxLength: 250
+    PatchedUserDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          maxLength: 60
+        email:
+          type: string
+          format: email
+          maxLength: 60
+        first_name:
+          type: string
+          maxLength: 60
+        last_name:
+          type: string
+          maxLength: 60
+        current_schedules:
+          type: string
+          readOnly: true
+        schedule_history:
+          type: string
+          readOnly: true
+        is_owner:
+          type: boolean
+          readOnly: true
+          nullable: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+    PaymentInformation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        user:
+          $ref: '#/components/schemas/UserBaseInfo'
+        number:
+          type: string
+          title: Card number
+          maxLength: 25
+          minLength: 13
+        code:
+          type: string
+          title: Security code
+          pattern: ^\d{3,4}$
+          maxLength: 4
+        expiration_date:
+          type: string
+          maxLength: 250
+      required:
+      - code
+      - expiration_date
+      - id
+      - number
+      - user
+    RegularDayOffEnum:
+      enum:
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY
+      - SUNDAY
+      - DEFAULT
+      type: string
+    Review:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserBaseInfo'
+          readOnly: true
+        court:
+          allOf:
+          - $ref: '#/components/schemas/CourtInfoForReview'
+          readOnly: true
+        rating:
+          type: integer
+          maximum: 10
+          minimum: 1
+        review:
+          type: string
+          maxLength: 250
+      required:
+      - court
+      - id
+      - review
+      - user
+    Schedule:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        datetime:
+          type: string
+          format: date-time
+        number_of_hours:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserBaseInfo'
+          readOnly: true
+        court:
+          allOf:
+          - $ref: '#/components/schemas/CourtInfoForSchedule'
+          readOnly: true
+      required:
+      - court
+      - datetime
+      - id
+      - number_of_hours
+      - user
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          maxLength: 60
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 250
+        email:
+          type: string
+          format: email
+          maxLength: 60
+        first_name:
+          type: string
+          maxLength: 60
+        last_name:
+          type: string
+          maxLength: 60
+        is_owner:
+          type: boolean
+          nullable: true
+        is_superuser:
+          type: boolean
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - date_joined
+      - email
+      - first_name
+      - id
+      - last_name
+      - password
+      - username
+    UserBaseInfo:
+      type: object
+      properties:
+        username:
+          type: string
+          maxLength: 60
+        email:
+          type: string
+          format: email
+          maxLength: 60
+      required:
+      - email
+      - username
+    UserDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          maxLength: 60
+        email:
+          type: string
+          format: email
+          maxLength: 60
+        first_name:
+          type: string
+          maxLength: 60
+        last_name:
+          type: string
+          maxLength: 60
+        current_schedules:
+          type: string
+          readOnly: true
+        schedule_history:
+          type: string
+          readOnly: true
+        is_owner:
+          type: boolean
+          readOnly: true
+          nullable: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - current_schedules
+      - date_joined
+      - email
+      - first_name
+      - id
+      - is_owner
+      - last_name
+      - schedule_history
+      - username
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
