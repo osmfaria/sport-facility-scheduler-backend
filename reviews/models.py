@@ -9,6 +9,8 @@ class Review(models.Model):
             MinValueValidator(1)
         ], default=1)
     review = models.CharField(max_length=250)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
 
     court = models.ForeignKey("courts.Court", on_delete=models.CASCADE, related_name="reviews")
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="reviews")
