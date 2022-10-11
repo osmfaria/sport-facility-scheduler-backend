@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from utils.google_address import get_google_address
 from addresses.permissions import IsFacilityOwner
 from .models import Address
 from .serializers import AddressSerializer
@@ -27,9 +28,10 @@ class AddressView(generics.RetrieveUpdateAPIView, generics.CreateAPIView):
         if repeated_address:
             raise ValidationError({"detail": "address already exists."})
 
+        map_address = get_google_address(serializer.validated_data)
 
         facility_instance = get_object_or_404(Facility, pk=self.kwargs["facility_id"])
-        serializer.save()
+        serializer.save(map_image=map_address)
 
         facility_instance.address_id = serializer.data['id']
         facility_instance.save()

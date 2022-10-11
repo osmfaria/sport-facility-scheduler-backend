@@ -1,13 +1,20 @@
 from datetime import datetime, timedelta
-from operator import invert
+from email import message
+from django.http import HttpResponse
+from django.core import mail
+from django.utils.html import strip_tags
 
 import ipdb
-from courts.models import Court, Holiday, NonOperatingDay
-from django.db import IntegrityError
-from django.shortcuts import get_object_or_404
+from courts.models import Court
+from django.conf import settings
+from django.core.mail import EmailMessage, send_mail
+from django.shortcuts import get_object_or_404, render
+from django.template import Context
+from django.template.loader import get_template, render_to_string
 from rest_framework import generics, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+from rest_framework.views import APIView, Response, status
 from utils.court_available_hours import list_court_available_hours
 from utils.set_new_hour import set_new_hour
 from utils.validate_unique_together import validate_unique_together
@@ -17,8 +24,44 @@ from schedules.serializers import ScheduleSerializer
 
 from .permissions import IsFacilityOwner, IsOwnerOrFacilityOwnerOrAdmin
 
-from django.core.mail import send_mail
-from django.conf import settings
+
+class SendEmail(APIView):
+    def post(self, request):
+        sendmail()
+        return Response({"message" : "email sended"})
+
+
+def sendmail():
+
+    subject='Subject'
+    to=['osm.faria@gmail.com']
+    from_email='courtmanager01@gmail.com'
+
+    ctx={
+        "user":"Osmar"
+    }
+
+    # message=get_template("utils/templates/hello.html").render(Context(ctx))
+    # EmailMessage(subject, message,to=to, from_email=from_email).send()
+    # ipdb.set_trace()
+    message = render_to_string('hello.html', ctx)
+    text_content = strip_tags(message)
+
+    email = mail.EmailMultiAlternatives(subject, text_content, from_email, to)
+    email.attach_alternative(message, "text/html")
+    email.send()
+    # msg = EmailMessage(
+    #     'Subject',
+    #     message,
+    #     'courtmanager01@gmail.com',
+    #     ['osm.faria@gmail.com']
+    # )
+    
+    # msg.content_subtype="html"
+    # msg.send()
+
+    # return HttpResponse("mandou")
+
 
 
 class ScheduleCreateView(generics.ListCreateAPIView):
@@ -87,6 +130,11 @@ class ScheduleCreateView(generics.ListCreateAPIView):
             from_email = settings.EMAIL_HOST_USER,
             recipient_list = [request.user.email],
             fail_silently = False
+
+
+        
+
+
 )
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
@@ -149,3 +197,7 @@ class CancelScheduleView(generics.DestroyAPIView):
         
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+def hello(request):
+    # return render(request, 'scheduleSuccess.html',{})
+    return render(request, 'hello.html')
+    # return HttpResponse("entrou")

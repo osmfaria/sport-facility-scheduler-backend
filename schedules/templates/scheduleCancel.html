@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="message">
+    <h1>Hey Osmar</h1>
+    <p>Your schedule at Facility has been canceled</p>
+
+    <div class="data-box">
+        <div class="box-icon">
+          <i class="fa-sharp fa-solid fa-calendar-check fa-lg"></i>
+        </div>
+        <h2>Appointment details</h2>
+        <table>
+          <tr>
+            <td class="td-title">Time</td>
+            <td class="td-data">Tue, Aug 2nd, 2:00 PM</td>
+          </tr>
+          <tr>
+            <td class="td-title">Facility</td>
+            <td class="td-data">Falicity Name</td>
+          </tr>
+          <tr>
+            <td class="td-title">Court</td>
+            <td class="td-data">Nome Corte</td>
+          </tr>
+          <tr>
+            <td class="td-title">Duration</td>
+            <td class="td-data">2hs</td>
+          </tr>
+        </table>
+      </div>
+</section>
+<div class="divisor"></div>
+{% extends 'footer.html' %}
+{% endblock %}
