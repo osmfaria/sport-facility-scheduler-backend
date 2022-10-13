@@ -11,7 +11,5 @@ def get_google_address(data):
 
     ADDRESS= f'{data["number"]}+{street},{city},{data["state"]}'
   
-    return f'https://maps.googleapis.com/maps/api/staticmap?center={ADDRESS}&zoom=15&size=400x400&markers=color:red%7C{ADDRESS}&key={API_KEY}'
-
-
+    return f'https://maps.googleapis.com/maps/api/staticmap?center={ADDRESS}&zoom=15&size=300x200&markers=color:red%7C{ADDRESS}&key={API_KEY}'
 

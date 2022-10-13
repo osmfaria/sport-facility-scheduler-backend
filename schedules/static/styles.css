@@ -244,6 +244,14 @@ table {
   transition-duration: 0.1s;
 }
 
+.table-mobile {
+  display: block;
+}
+
+.table-non-mobile {
+  display: none;
+}
+
 @media (min-width: 700px) {
   .cards {
     flex-direction: row;
@@ -262,6 +270,14 @@ table {
 
   .appointment-box {
     align-items: flex-start;
+  }
+
+  .table-mobile{
+    display: none;
+  }
+  
+  .table-non-mobile{
+    display: block;
   }
 }
 
