@@ -1,45 +1,30 @@
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
-from django.core.mail import EmailMessage
-from django.http import HttpResponse
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 from .token import AccountActivationTokenGenerator
-from .models import User
+from django.utils.html import strip_tags
+from django.core import mail
+from project import settings
+
 
 account_activation_token = AccountActivationTokenGenerator()
 
-def activateEmail(request, user, to_email):
-    mail_subject = 'Activate your user account.'
-    message = render_to_string('template_activate_account.html', {
+def sendActivateEmail(request, user, recipient):
+    subject = 'Activate your user account.'
+    link = f"http://{get_current_site(request).domain}/api/activate/{urlsafe_base64_encode(force_bytes(user.pk))}/{account_activation_token.make_token(user)}/"
+    
+    message = render_to_string('welcome.html', {
         'user': user,
-        'domain': get_current_site(request).domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': account_activation_token.make_token(user),
+        'link':link,
         'protocol': 'https' if request.is_secure() else 'http'
     })
 
-    email = EmailMessage(mail_subject, message, to=[to_email])
+    text_content = strip_tags(message)
 
-    # email.send()
+    email = mail.EmailMultiAlternatives(subject, text_content, settings.EMAIL_HOST_USER, recipient)
+    email.attach_alternative(message, "text/html")
+    email.send()
 
-    if email.send():
-        return HttpResponse("Email Sended")
-    else:
-        return HttpResponse("Fail to send email")
 
-def activate(request, uidb64, token):
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-    
-        return HttpResponse("Email verify. Go to Login")
-
-    else:
-        return HttpResponse("Link expired")
+   

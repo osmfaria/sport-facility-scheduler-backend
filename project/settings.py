@@ -180,7 +180,7 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = env('EMAIL_PORT')
@@ -189,4 +189,3 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 PASSWORD_RESET_TIMEOUT = 14400
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'schedules/static'),]

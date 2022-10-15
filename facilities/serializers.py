@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from users.serializers import UserBaseInfoSerializer
-
 from .models import Facility
 
 
@@ -17,6 +16,7 @@ class DetailedFacilitySerializer(serializers.ModelSerializer):
         model = Facility
         fields = "__all__"
         depth = 1
+
 
 class FacilityBaseInfoSerializer(serializers.ModelSerializer):
     class Meta:

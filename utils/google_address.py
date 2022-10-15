@@ -1,7 +1,3 @@
-
-from addresses.models import Address
-
-
 API_KEY = 'AIzaSyA9Jnj8xt9IH_B_Jvken_vmpAb_dc_tuwo'
 
 def get_google_address(data):

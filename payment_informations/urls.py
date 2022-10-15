@@ -1,6 +1,6 @@
 from django.urls import path
-
 from . import views
+
 
 urlpatterns = [
     path('users/<user_id>/payments/', views.ListUserPaymentInformations.as_view()),

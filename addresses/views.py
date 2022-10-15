@@ -5,7 +5,6 @@ from addresses.permissions import IsFacilityOwner
 from .models import Address
 from .serializers import AddressSerializer
 from facilities.models import Facility
-from rest_framework.views import Response, Request, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.authentication import TokenAuthentication
 

@@ -1,6 +1,5 @@
 from rest_framework import permissions
 from rest_framework.views import Request, View
-
 from facilities.models import Facility
 
 

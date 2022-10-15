@@ -8,5 +8,4 @@ class Address(models.Model):
     city = models.CharField(max_length=255)
     zipcode = models.CharField(max_length=20)
     state = models.CharField(max_length=2)
-
     map_image = models.CharField(max_length=250)
