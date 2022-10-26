@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'payment_informations',
     'reviews',
     'schedules',
+    'django_filters',
 ]
 
 
@@ -167,7 +168,10 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
        'rest_framework.authentication.TokenAuthentication',
-   )
+   ),
+   'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
 }
 
 AUTH_USER_MODEL = 'users.User'

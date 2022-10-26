@@ -12,7 +12,7 @@ from users.models import User
 from users.permissions import IsOwnerOrAdmin
 from users.serializers import (LoginSerializer, UserDetailSerializer,
                                UserSerializer)
-
+import ipdb
 
 class ListUsersView(generics.ListAPIView):
     queryset = User.objects.all()
@@ -40,7 +40,6 @@ class LoginView(APIView):
     def post(self, request: Request) -> Response:
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         user = authenticate(**serializer.validated_data)
 
         if user:

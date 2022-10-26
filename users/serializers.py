@@ -26,7 +26,6 @@ class LoginSerializer(serializers.Serializer):
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
-    # schedules = ScheduleSerializer(many=True)
     current_schedules = serializers.SerializerMethodField()
     schedule_history = serializers.SerializerMethodField()
 

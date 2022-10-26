@@ -8,6 +8,39 @@ from .permissions import IsFacilityOwnerOrAdmin, IsFacilityOwnerOrReadOnly, IsCo
 from courts.serializers import (CourtAvailableSchedulesSerializers,
                                 CourtSerializer, HolidaySerializer,
                                 NonOperatingDaysSerializer)
+from django_filters import rest_framework as filters
+from utils.court_available_hours import list_court_available_hours
+import datetime
+
+
+class CourtFilter(filters.FilterSet):
+    sport = filters.CharFilter(field_name="sport", lookup_expr="icontains")
+    capacity = filters.NumberFilter(field_name="capacity", lookup_expr="gte")
+
+    class Meta:
+        model = Court
+        fields = "__all__"
+
+class CourtFilterView(generics.ListAPIView):
+
+    queryset = Court.objects.all()
+    serializer_class = CourtSerializer
+
+    lookup_url_kwarg = ["city", "date"]
+
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = CourtFilter
+
+
+    def get_queryset(self):
+        city = self.kwargs["city"].lower()
+        date = datetime.datetime.strptime(self.kwargs["date"], "%Y-%m-%d")
+        courts = Court.objects.filter(sport_facility__address__city = city)
+
+        available_courts_id = [court.id for court in courts if type(list_court_available_hours(date, court)) == list]
+        available_courts = Court.objects.filter(id__in=available_courts_id)
+
+        return available_courts
 
 
 class CourtView(generics.ListCreateAPIView):
@@ -19,12 +52,16 @@ class CourtView(generics.ListCreateAPIView):
 
     lookup_url_kwarg = "facility_id"
 
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = CourtFilter
+
 
     def perform_create(self, serializer):
         facility_id = self.kwargs[self.lookup_url_kwarg]
         facility = get_object_or_404(Facility,id=facility_id)
 
         return serializer.save(sport_facility=facility)
+
 
     def get_queryset(self):
         facility_id = self.kwargs[self.lookup_url_kwarg]

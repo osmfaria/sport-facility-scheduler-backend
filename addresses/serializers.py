@@ -8,3 +8,10 @@ class AddressSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ['map_image']
 
+
+class AddressBaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ["street", "number", "city", "state", "zipcode"]
+
+

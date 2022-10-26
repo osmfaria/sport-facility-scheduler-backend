@@ -13,7 +13,26 @@ from .permissions import IsFacilityOwner, IsOwnerOrFacilityOwnerOrAdmin
 from .functions import sendmail
 
 
-class ScheduleCreateView(generics.ListCreateAPIView):
+class ScheduleFilterView(generics.ListAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsFacilityOwner]
+
+    queryset = Schedule.objects.all()
+    serializer_class = ScheduleSerializer
+
+    lookup_url_kwarg = ["court_id", "initial_date", "final_date"]
+
+
+    def get_queryset(self):
+        court_id = self.kwargs["court_id"]
+        initial_date = self.kwargs["initial_date"] 
+        final_date = self.kwargs["final_date"]
+        court = get_object_or_404(Court, id=court_id)
+
+        return Schedule.objects.filter(court=court, datetime__date__range=[initial_date, final_date]).order_by("datetime")
+
+
+class ScheduleCreateView(generics.CreateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsFacilityOwner]
 
@@ -25,14 +44,14 @@ class ScheduleCreateView(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         court_id = self.kwargs[self.lookup_url_kwarg]
         court = Court.objects.get(id=court_id)
-        
+
         username = request.user.username.capitalize()
         input_date_str = request.data["datetime"]
         number_of_hours = request.data["number_of_hours"]
-        
+
         datetime_obj = datetime.strptime(input_date_str, '%Y-%m-%d %H:00')
         available_hours = list_court_available_hours(datetime_obj, court)
-
+        
         starting_hour = datetime_obj.hour
         final_hour = datetime_obj.hour + number_of_hours
         schedule_hours_list = [hour for hour in range(starting_hour, final_hour)]
@@ -86,7 +105,7 @@ class ScheduleCreateView(generics.ListCreateAPIView):
         court_id = self.kwargs[self.lookup_url_kwarg]
         court = get_object_or_404(Court, id=court_id)
 
-        return Schedule.objects.filter(court=court)
+        return Schedule.objects.filter(court=court).order_by("datetime") 
 
 
 class CancelScheduleView(generics.DestroyAPIView):
@@ -129,6 +148,5 @@ class CancelScheduleView(generics.DestroyAPIView):
         )
 
         return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 
