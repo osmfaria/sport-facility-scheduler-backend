@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center;">
+    <div style="margin-top: 20px;">
+        <h1>Welcome {{user.first_name}}!</h1>
+        <p style="margin-top: 10px; color:#8e8e93;">
+            To finish your registration process please confirm your email 
+        </p>
+    </div>
+                
+    <div style="margin: 25px 0 80px;">
+        <a href={{ link }} 
+            style=" 
+                background-color: #171717;
+                border: 1px solid rgba(27, 31, 35, 0.15);
+                border-radius: 6px;
+                color: #FFFFFF;
+                font-size: 1.2rem;
+                font-weight: 600;
+                line-height: 20px;
+                list-style: none;
+                padding: 10px 25px;
+                vertical-align: middle;
+                cursor: pointer;
+                text-decoration: none;
+            ">
+            <span>Confirm email</span>
+        </a>
+    </div>
+    <div
+       style="
+         border: 1px solid #e6e6eb;
+         border-radius: 5px;
+         width: 100%;
+         margin: 12px 0 5px;
+       "
+    ></div>
+    <p style="color:#8e8e93; margin: 15px 0 20px; font-size: 00.8rem; text-align: start;">
+        You're receiving this email because you used Court-Scheduler to register a new account. 
+    </p>
+
+</div>
+
+{% endblock %}

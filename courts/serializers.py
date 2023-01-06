@@ -4,7 +4,6 @@ from courts.models import Court
 from courts.models import Court, Holiday, NonOperatingDay
 from utils.court_available_hours import list_court_available_hours
 from facilities.serializers import FacilityBaseInfoSerializer
-import ipdb
 
 
 def get_week_day(day):

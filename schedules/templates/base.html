@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      * {
+        margin: 0;
+      }
+      html,
+      body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 0.9rem;
+      }
+
+      body {
+        line-height: 1.5;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      input,
+      button,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      .ad-btn:hover {
+        background-color: #f3f4f6 !important;
+      }
+
+      .cards--mobile {
+        display: block;
+      }
+
+      .cards {
+        display: none;
+      }
+
+      @media only screen and (min-width: 700px) {
+        .cards--mobile {
+          display: none !important;
+        }
+
+        .cards {
+          display: block !important;
+        }
+
+        header h1 {
+          display: block !important;
+        }
+
+        .email {
+          padding: 40px !important;
+        }
+      }
+    </style>
+  </head>
+  <body style="background: #eaebeb; padding: 0px 7px">
+    {% include 'header.html' %}
+    <main>
+      <div
+        class="email"
+        style="
+          margin: 0 7px;
+          background-color: #f7f7f7;
+          border: 1px solid #d1d1d6;
+          border-radius: 0 0 15px 15px;
+          padding: 40px 20px;
+          font-size: 1rem;
+          max-width: 700px;
+          gap: 1rem;
+          padding: 20px;
+          margin: 0 auto;
+        "
+      >
+        {% block content %} {% endblock %}
+      </div>
+    </main>
+    {% include 'footer.html' %}
+  </body>
+</html>

@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% block content %}
+
+<section class="message" style="margin-bottom: 10px">
+  <h1>Hey {{ user }}</h1>
+  <p style="font-size: 1rem; margin-top: 1rem">
+    Your appointment at {{ court.sport_facility.name }} has been canceled
+  </p>
+</section>
+<section>
+  <div
+    style="
+      border: 1px solid #e6e6eb;
+      border-radius: 5px;
+      width: 100%;
+      margin: 12px 0 5px;
+    "
+  ></div>
+  <span style="color: #8e8e93; font-size: 0.8rem; width: 100%; margin-left: 8px"
+    >APPOINTMENT</span
+  >
+
+  <table
+    cellpadding="5"
+    margin="auto"
+    style="max-width: 622px; margin: auto"
+  >
+    <tr>
+      <td style="width: 300px">
+        <div
+          style="
+            margin-top: 0px;
+            margin-bottom: auto;
+            padding: 0px 20px 20px;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #d1d1d6;
+            height: 320px;
+          "
+        >
+          <div
+            style="
+              background-color: #f7f7f7;
+              height: 35px;
+              width: 55px;
+              border-radius: 0 0 7px 7px;
+              background-color: #198754;
+              color: white;
+              text-align: center;
+              vertical-align: middle;
+            "
+          >
+            <div
+              style="
+                background-image: url('https://lh3.googleusercontent.com/qF-lTG_OsfdFIFqGqPnOgZaRa0aENBTdxd3o2sYS9mEzL5bzWXTV_QcrhOD-z_Br6kAoqOGi_rzc_fLlquTdJQerzoI9llPdbk8ru6YqLdIHIgWY3JW3tCoQFYyolZ7KtPsdJani4g=w2400');
+                background-size: cover;
+                height: 35px;
+                width: 35px;
+                margin: auto;
+              "
+            ></div>
+          </div>
+          <h2 style="padding-top: 20px; font-size: 1.4rem; margin-bottom: 20px">
+            Appointment details
+          </h2>
+          <table style="width: 100%">
+            <tr width="270">
+              <td style="color: #8e8e83">Time</td>
+              <td style="text-align: end">{{ date_time }}</td>
+            </tr>
+            <tr width="270">
+              <td style="color: #8e8e83">Facility</td>
+              <td style="text-align: end">{{ court.sport_facility.name }}</td>
+            </tr>
+            <tr width="270">
+              <td style="color: #8e8e83">Court</td>
+              <td style="text-align: end">{{ court.name }}</td>
+            </tr>
+            <tr width="270">
+              <td style="color: #8e8e83">Duration</td>
+              <td style="text-align: end">{{ duration }}</td>
+            </tr>
+          </table>
+        </tr>
+  </table>
+
+</section>
+<div
+  style="
+    border: 1px solid #e6e6eb;
+    border-radius: 5px;
+    width: 100%;
+    margin: 12px 0 5px;
+  "
+></div>
+<p style="color:#8e8e93; margin: 15px 0 20px; font-size: 00.8rem; text-align: start;">
+        You're receiving this email because you used Court-Scheduler to reserve a court with {{ court.sport_facility.name }}. 
+</p>
+{% endblock %}

@@ -4,7 +4,6 @@ from users.serializers import UserBaseInfoSerializer
 from courts.serializers import CourtInfoForReviewSerializer
 
 
-
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserBaseInfoSerializer(read_only=True)
     court = CourtInfoForReviewSerializer(read_only=True)
