@@ -10,4 +10,4 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = "__all__"
-        read_only_fields = ["court", "user"]
+        read_only_fields = ["court", "user", "created_at"]
