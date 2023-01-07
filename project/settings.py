@@ -100,24 +100,24 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if os.environ.get("TEST"):
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-else:
-    DATABASES = {
-				"default": {
-						"ENGINE": "django.db.backends.postgresql",
-				        "NAME": env("POSTGRES_DB"),
-				        "USER": env("POSTGRES_USER"),
-				        "PASSWORD": env("POSTGRES_PASSWORD"),
-				        "HOST": "db",
-				        "PORT": 5432,
-				    }
-    }
+# if os.environ.get("TEST"):
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.sqlite3",
+#             "NAME": BASE_DIR / "db.sqlite3",
+#         }
+#     }
+# else:
+#     DATABASES = {
+# 				"default": {
+# 						"ENGINE": "django.db.backends.postgresql",
+# 				        "NAME": env("POSTGRES_DB"),
+# 				        "USER": env("POSTGRES_USER"),
+# 				        "PASSWORD": env("POSTGRES_PASSWORD"),
+# 				        "HOST": "db",
+# 				        "PORT": 5432,
+# 				    }
+#     }
 
 
 # Password validation
@@ -191,4 +191,4 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 PASSWORD_RESET_TIMEOUT = 14400
 
-# DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES = {'default': dj_database_url.config(conn_max_age=600, ssl_require=True)}
