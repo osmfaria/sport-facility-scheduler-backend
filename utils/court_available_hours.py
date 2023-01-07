@@ -1,7 +1,7 @@
 from courts.models import NonOperatingDay, Holiday
 from schedules.models import Schedule
 from datetime import datetime, timedelta
-import ipdb
+
 
 def get_week_day(day):
     days_of_the_week = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]

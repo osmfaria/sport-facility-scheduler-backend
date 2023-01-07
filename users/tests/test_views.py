@@ -2,7 +2,7 @@ from urllib import response
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
 from model_bakery import baker
-import ipdb
+
 
 from users.models import User
 
@@ -36,7 +36,6 @@ class UserViewTestCase(APITestCase):
 
         len_users_db = len(User.objects.all())
         response = self.client.get(self.base_url)
-        # ipdb.set_trace()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), len_users_db)
 
@@ -52,7 +51,6 @@ class UserViewTestCase(APITestCase):
         }
 
         response = self.client.post("/api/register/", new_user)
-        # ipdb.set_trace()
 
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data["username"], new_user["username"])
@@ -137,7 +135,6 @@ class UserViewTestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token_admin.key)
 
         response = self.client.get(f"{self.base_url}{self.user_2.id}/")
-        # ipdb.set_trace()
         self.assertEqual(response.status_code, 200)
 
     def test_update_own_user_last_name(self):

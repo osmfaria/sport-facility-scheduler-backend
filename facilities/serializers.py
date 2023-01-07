@@ -5,7 +5,7 @@ from users.serializers import UserBaseInfoSerializer
 from .models import Facility
 from addresses.serializers import AddressSerializer, AddressBaseSerializer
 from utils.google_address import get_google_address
-import ipdb
+
 
 class FacilitySerializer(serializers.ModelSerializer):
     address = AddressSerializer()
@@ -29,7 +29,6 @@ class FacilitySerializer(serializers.ModelSerializer):
         map_address = get_google_address(address)
 
         address_instance = Address.objects.create(**address, map_image=map_address)
-        ipdb.set_trace()
         facility = Facility.objects.create(**validated_data, address=address_instance)
 
         return facility
