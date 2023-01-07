@@ -23,7 +23,7 @@ env = environ.Env(
 
 dotenv.load_dotenv()
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -191,3 +191,4 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 PASSWORD_RESET_TIMEOUT = 14400
 
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
