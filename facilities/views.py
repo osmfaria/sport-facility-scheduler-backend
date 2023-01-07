@@ -1,9 +1,11 @@
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 from facilities.models import Facility
-from .permissions import IsOwner, IsTheOwnerOrAdmin
+from .permissions import IsTheOwnerOrAdmin
 from .serializers import FacilitySerializer, DetailedFacilitySerializer
 from django_filters import rest_framework as filters
+from drf_spectacular.utils import extend_schema
+
 
 
 class FacilityFilter(filters.FilterSet):
@@ -13,6 +15,8 @@ class FacilityFilter(filters.FilterSet):
         model = Facility
         fields = "__all__"
 
+@extend_schema(tags=['Sport_Facility'])
+@extend_schema(description='Only allowed for User with is_owner=true', methods=["POST"])
 
 class FacilityView(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
@@ -28,6 +32,9 @@ class FacilityView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+@extend_schema(tags=['Sport_Facility'])
+@extend_schema(description='User must be the owner or admin', methods=["PATCH", "DELETE"])
+@extend_schema(exclude=True, methods=["PUT"])
 
 class FacilityDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication]

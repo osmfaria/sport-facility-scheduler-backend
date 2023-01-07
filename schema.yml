@@ -5,20 +5,36 @@ info:
 paths:
   /api/login/:
     post:
-      operationId: login_create
+      operationId: api_login_create
       tags:
-      - login
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
       security:
       - tokenAuth: []
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+          description: ''
   /api/register/:
     post:
-      operationId: register_create
+      operationId: api_register_create
       tags:
-      - register
+      - api
       requestBody:
         content:
           application/json:
@@ -43,9 +59,41 @@ paths:
           description: ''
   /api/sport_facilities/:
     get:
-      operationId: sport_facilities_list
+      operationId: api_sport_facilities_list
+      parameters:
+      - in: query
+        name: address
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: city
+        schema:
+          type: string
+      - in: query
+        name: email
+        schema:
+          type: string
+      - in: query
+        name: id
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: phone_number
+        schema:
+          type: string
+      - in: query
+        name: user
+        schema:
+          type: string
+          format: uuid
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -58,9 +106,9 @@ paths:
                   $ref: '#/components/schemas/Facility'
           description: ''
     post:
-      operationId: sport_facilities_create
+      operationId: api_sport_facilities_create
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -84,7 +132,7 @@ paths:
           description: ''
   /api/sport_facilities/{facility_id}/address/:
     get:
-      operationId: sport_facilities_address_retrieve
+      operationId: api_sport_facilities_address_retrieve
       parameters:
       - in: path
         name: facility_id
@@ -94,7 +142,7 @@ paths:
         description: A UUID string identifying this facility.
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -104,41 +152,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Address'
           description: ''
-    post:
-      operationId: sport_facilities_address_create
-      parameters:
-      - in: path
-        name: facility_id
-        schema:
-          type: string
-          format: uuid
-        description: A UUID string identifying this facility.
-        required: true
-      tags:
-      - sport_facilities
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Address'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Address'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Address'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-          description: ''
     put:
-      operationId: sport_facilities_address_update
+      operationId: api_sport_facilities_address_update
       parameters:
       - in: path
         name: facility_id
@@ -148,7 +163,7 @@ paths:
         description: A UUID string identifying this facility.
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -171,7 +186,7 @@ paths:
                 $ref: '#/components/schemas/Address'
           description: ''
     patch:
-      operationId: sport_facilities_address_partial_update
+      operationId: api_sport_facilities_address_partial_update
       parameters:
       - in: path
         name: facility_id
@@ -181,7 +196,7 @@ paths:
         description: A UUID string identifying this facility.
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -204,8 +219,17 @@ paths:
           description: ''
   /api/sport_facilities/{facility_id}/courts/:
     get:
-      operationId: sport_facilities_courts_list
+      operationId: api_sport_facilities_courts_list
       parameters:
+      - in: query
+        name: capacity
+        schema:
+          type: integer
+      - in: query
+        name: closing_hour
+        schema:
+          type: string
+          format: time
       - in: path
         name: facility_id
         schema:
@@ -213,8 +237,43 @@ paths:
           format: uuid
         description: A UUID string identifying this court.
         required: true
+      - in: query
+        name: id
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: is_indoor
+        schema:
+          type: boolean
+      - in: query
+        name: max_schedule_range_in_days
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: opening_hour
+        schema:
+          type: string
+          format: time
+      - in: query
+        name: price_by_hour
+        schema:
+          type: number
+      - in: query
+        name: sport
+        schema:
+          type: string
+      - in: query
+        name: sport_facility
+        schema:
+          type: string
+          format: uuid
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -227,7 +286,7 @@ paths:
                   $ref: '#/components/schemas/Court'
           description: ''
     post:
-      operationId: sport_facilities_courts_create
+      operationId: api_sport_facilities_courts_create
       parameters:
       - in: path
         name: facility_id
@@ -237,7 +296,7 @@ paths:
         description: A UUID string identifying this court.
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -261,7 +320,7 @@ paths:
           description: ''
   /api/sport_facilities/{sport_facility_id}/:
     get:
-      operationId: sport_facilities_retrieve
+      operationId: api_sport_facilities_retrieve
       parameters:
       - in: path
         name: sport_facility_id
@@ -271,7 +330,7 @@ paths:
         description: A UUID string identifying this facility.
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -282,7 +341,7 @@ paths:
                 $ref: '#/components/schemas/DetailedFacility'
           description: ''
     put:
-      operationId: sport_facilities_update
+      operationId: api_sport_facilities_update
       parameters:
       - in: path
         name: sport_facility_id
@@ -292,7 +351,7 @@ paths:
         description: A UUID string identifying this facility.
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -315,7 +374,7 @@ paths:
                 $ref: '#/components/schemas/DetailedFacility'
           description: ''
     patch:
-      operationId: sport_facilities_partial_update
+      operationId: api_sport_facilities_partial_update
       parameters:
       - in: path
         name: sport_facility_id
@@ -325,7 +384,7 @@ paths:
         description: A UUID string identifying this facility.
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -346,9 +405,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/DetailedFacility'
           description: ''
-  /api/sport_facilities/{sport_facility_id}/delete/:
     delete:
-      operationId: sport_facilities_delete_destroy
+      operationId: api_sport_facilities_destroy
       parameters:
       - in: path
         name: sport_facility_id
@@ -358,7 +416,7 @@ paths:
         description: A UUID string identifying this facility.
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -366,7 +424,7 @@ paths:
           description: No response body
   /api/sport_facilities/courts/{court_id}/:
     get:
-      operationId: sport_facilities_courts_retrieve
+      operationId: api_sport_facilities_courts_retrieve
       parameters:
       - in: path
         name: court_id
@@ -376,7 +434,7 @@ paths:
         description: A UUID string identifying this court.
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -387,7 +445,7 @@ paths:
                 $ref: '#/components/schemas/Court'
           description: ''
     put:
-      operationId: sport_facilities_courts_update
+      operationId: api_sport_facilities_courts_update
       parameters:
       - in: path
         name: court_id
@@ -397,7 +455,7 @@ paths:
         description: A UUID string identifying this court.
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -420,7 +478,7 @@ paths:
                 $ref: '#/components/schemas/Court'
           description: ''
     patch:
-      operationId: sport_facilities_courts_partial_update
+      operationId: api_sport_facilities_courts_partial_update
       parameters:
       - in: path
         name: court_id
@@ -430,7 +488,7 @@ paths:
         description: A UUID string identifying this court.
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -452,7 +510,7 @@ paths:
                 $ref: '#/components/schemas/Court'
           description: ''
     delete:
-      operationId: sport_facilities_courts_destroy
+      operationId: api_sport_facilities_courts_destroy
       parameters:
       - in: path
         name: court_id
@@ -462,7 +520,7 @@ paths:
         description: A UUID string identifying this court.
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -470,7 +528,7 @@ paths:
           description: No response body
   /api/sport_facilities/courts/{court_id}/holidays/:
     get:
-      operationId: sport_facilities_courts_holidays_list
+      operationId: api_sport_facilities_courts_holidays_list
       parameters:
       - in: path
         name: court_id
@@ -480,7 +538,7 @@ paths:
         description: A UUID string identifying this holiday.
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -493,7 +551,7 @@ paths:
                   $ref: '#/components/schemas/Holiday'
           description: ''
     post:
-      operationId: sport_facilities_courts_holidays_create
+      operationId: api_sport_facilities_courts_holidays_create
       parameters:
       - in: path
         name: court_id
@@ -503,7 +561,7 @@ paths:
         description: A UUID string identifying this holiday.
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -525,9 +583,66 @@ paths:
               schema:
                 $ref: '#/components/schemas/Holiday'
           description: ''
+  /api/sport_facilities/courts/{court_id}/holidays/{holiday_id}/:
+    delete:
+      operationId: api_sport_facilities_courts_holidays_destroy
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: path
+        name: holiday_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this holiday.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/sport_facilities/courts/{court_id}/management/{initial_date}/{final_date}/:
+    get:
+      operationId: api_sport_facilities_courts_management_list
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: path
+        name: final_date
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: initial_date
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+          description: ''
   /api/sport_facilities/courts/{court_id}/non_operating_day/:
     get:
-      operationId: sport_facilities_courts_non_operating_day_list
+      operationId: api_sport_facilities_courts_non_operating_day_list
       parameters:
       - in: path
         name: court_id
@@ -537,7 +652,7 @@ paths:
         description: A UUID string identifying this non operating day.
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -550,7 +665,7 @@ paths:
                   $ref: '#/components/schemas/NonOperatingDays'
           description: ''
     post:
-      operationId: sport_facilities_courts_non_operating_day_create
+      operationId: api_sport_facilities_courts_non_operating_day_create
       parameters:
       - in: path
         name: court_id
@@ -560,7 +675,7 @@ paths:
         description: A UUID string identifying this non operating day.
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -581,9 +696,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/NonOperatingDays'
           description: ''
+  /api/sport_facilities/courts/{court_id}/non_operating_day/{non_operanting_day_id}/:
+    delete:
+      operationId: api_sport_facilities_courts_non_operating_day_destroy
+      parameters:
+      - in: path
+        name: court_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: path
+        name: non_operanting_day_id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this non operating day.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/sport_facilities/courts/{court_id}/reviews/:
     get:
-      operationId: sport_facilities_courts_reviews_list
+      operationId: api_sport_facilities_courts_reviews_list
       parameters:
       - in: path
         name: court_id
@@ -592,7 +731,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -605,7 +744,7 @@ paths:
                   $ref: '#/components/schemas/Review'
           description: ''
     post:
-      operationId: sport_facilities_courts_reviews_create
+      operationId: api_sport_facilities_courts_reviews_create
       parameters:
       - in: path
         name: court_id
@@ -614,7 +753,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -637,7 +776,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     put:
-      operationId: sport_facilities_courts_reviews_update
+      operationId: api_sport_facilities_courts_reviews_update
       parameters:
       - in: path
         name: court_id
@@ -646,7 +785,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -669,7 +808,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     patch:
-      operationId: sport_facilities_courts_reviews_partial_update
+      operationId: api_sport_facilities_courts_reviews_partial_update
       parameters:
       - in: path
         name: court_id
@@ -678,7 +817,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -700,7 +839,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     delete:
-      operationId: sport_facilities_courts_reviews_destroy
+      operationId: api_sport_facilities_courts_reviews_destroy
       parameters:
       - in: path
         name: court_id
@@ -709,7 +848,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -717,7 +856,7 @@ paths:
           description: No response body
   /api/sport_facilities/courts/{court_id}/reviews/{review_id}/:
     get:
-      operationId: sport_facilities_courts_reviews_list_2
+      operationId: api_sport_facilities_courts_reviews_list_2
       parameters:
       - in: path
         name: court_id
@@ -731,7 +870,7 @@ paths:
           type: string
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -744,7 +883,7 @@ paths:
                   $ref: '#/components/schemas/Review'
           description: ''
     post:
-      operationId: sport_facilities_courts_reviews_create_2
+      operationId: api_sport_facilities_courts_reviews_create_2
       parameters:
       - in: path
         name: court_id
@@ -758,7 +897,7 @@ paths:
           type: string
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -781,7 +920,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     put:
-      operationId: sport_facilities_courts_reviews_update_2
+      operationId: api_sport_facilities_courts_reviews_update_2
       parameters:
       - in: path
         name: court_id
@@ -795,7 +934,7 @@ paths:
           type: string
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -818,7 +957,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     patch:
-      operationId: sport_facilities_courts_reviews_partial_update_2
+      operationId: api_sport_facilities_courts_reviews_partial_update_2
       parameters:
       - in: path
         name: court_id
@@ -832,7 +971,7 @@ paths:
           type: string
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -854,7 +993,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     delete:
-      operationId: sport_facilities_courts_reviews_destroy_2
+      operationId: api_sport_facilities_courts_reviews_destroy_2
       parameters:
       - in: path
         name: court_id
@@ -868,38 +1007,15 @@ paths:
           type: string
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
         '204':
           description: No response body
   /api/sport_facilities/courts/{court_id}/schedules/:
-    get:
-      operationId: sport_facilities_courts_schedules_list
-      parameters:
-      - in: path
-        name: court_id
-        schema:
-          type: string
-          format: uuid
-        description: A UUID string identifying this schedule.
-        required: true
-      tags:
-      - sport_facilities
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Schedule'
-          description: ''
     post:
-      operationId: sport_facilities_courts_schedules_create
+      operationId: api_sport_facilities_courts_schedules_create
       parameters:
       - in: path
         name: court_id
@@ -909,7 +1025,7 @@ paths:
         description: A UUID string identifying this schedule.
         required: true
       tags:
-      - sport_facilities
+      - api
       requestBody:
         content:
           application/json:
@@ -933,7 +1049,7 @@ paths:
           description: ''
   /api/sport_facilities/courts/{court_id}/schedules/{date}/:
     get:
-      operationId: sport_facilities_courts_schedules_retrieve
+      operationId: api_sport_facilities_courts_schedules_retrieve
       parameters:
       - in: path
         name: court_id
@@ -948,7 +1064,7 @@ paths:
           type: string
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -958,45 +1074,81 @@ paths:
               schema:
                 $ref: '#/components/schemas/CourtAvailableSchedulesSerializers'
           description: ''
-  /api/sport_facilities/courts/holidays/{holiday_id}/:
-    delete:
-      operationId: sport_facilities_courts_holidays_destroy
+  /api/sport_facilities/courts/filter/{city}/{date}/:
+    get:
+      operationId: api_sport_facilities_courts_filter_list
       parameters:
+      - in: query
+        name: capacity
+        schema:
+          type: integer
       - in: path
-        name: holiday_id
+        name: city
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: closing_hour
+        schema:
+          type: string
+          format: time
+      - in: path
+        name: date
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: id
         schema:
           type: string
           format: uuid
-        description: A UUID string identifying this holiday.
-        required: true
-      tags:
-      - sport_facilities
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
-  /api/sport_facilities/courts/non_operating_day/{non_operanting_day_id}/:
-    delete:
-      operationId: sport_facilities_courts_non_operating_day_destroy
-      parameters:
-      - in: path
-        name: non_operanting_day_id
+      - in: query
+        name: is_indoor
+        schema:
+          type: boolean
+      - in: query
+        name: max_schedule_range_in_days
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: opening_hour
+        schema:
+          type: string
+          format: time
+      - in: query
+        name: price_by_hour
+        schema:
+          type: number
+      - in: query
+        name: sport
+        schema:
+          type: string
+      - in: query
+        name: sport_facility
         schema:
           type: string
           format: uuid
-        description: A UUID string identifying this non operating day.
-        required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
+      - {}
       responses:
-        '204':
-          description: No response body
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Court'
+          description: ''
   /api/sport_facilities/courts/schedules/{schedule_id}/:
     delete:
-      operationId: sport_facilities_courts_schedules_destroy
+      operationId: api_sport_facilities_courts_schedules_destroy
       parameters:
       - in: path
         name: schedule_id
@@ -1006,7 +1158,7 @@ paths:
         description: A UUID string identifying this schedule.
         required: true
       tags:
-      - sport_facilities
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -1014,9 +1166,9 @@ paths:
           description: No response body
   /api/users/:
     get:
-      operationId: users_list
+      operationId: api_users_list
       tags:
-      - users
+      - api
       security:
       - tokenAuth: []
       - {}
@@ -1031,7 +1183,7 @@ paths:
           description: ''
   /api/users/{user_id}/:
     get:
-      operationId: users_retrieve
+      operationId: api_users_retrieve
       parameters:
       - in: path
         name: user_id
@@ -1041,7 +1193,7 @@ paths:
         description: A UUID string identifying this user.
         required: true
       tags:
-      - users
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -1052,7 +1204,7 @@ paths:
                 $ref: '#/components/schemas/UserDetail'
           description: ''
     put:
-      operationId: users_update
+      operationId: api_users_update
       parameters:
       - in: path
         name: user_id
@@ -1062,7 +1214,7 @@ paths:
         description: A UUID string identifying this user.
         required: true
       tags:
-      - users
+      - api
       requestBody:
         content:
           application/json:
@@ -1085,7 +1237,7 @@ paths:
                 $ref: '#/components/schemas/UserDetail'
           description: ''
     patch:
-      operationId: users_partial_update
+      operationId: api_users_partial_update
       parameters:
       - in: path
         name: user_id
@@ -1095,7 +1247,7 @@ paths:
         description: A UUID string identifying this user.
         required: true
       tags:
-      - users
+      - api
       requestBody:
         content:
           application/json:
@@ -1117,7 +1269,7 @@ paths:
                 $ref: '#/components/schemas/UserDetail'
           description: ''
     delete:
-      operationId: users_destroy
+      operationId: api_users_destroy
       parameters:
       - in: path
         name: user_id
@@ -1127,7 +1279,7 @@ paths:
         description: A UUID string identifying this user.
         required: true
       tags:
-      - users
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -1135,7 +1287,7 @@ paths:
           description: No response body
   /api/users/{user_id}/payments/:
     get:
-      operationId: users_payments_list
+      operationId: api_users_payments_list
       parameters:
       - in: path
         name: user_id
@@ -1145,7 +1297,7 @@ paths:
         description: A UUID string identifying this payment information.
         required: true
       tags:
-      - users
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -1159,7 +1311,7 @@ paths:
           description: ''
   /api/users/{user_id}/payments/{payment_id}/:
     get:
-      operationId: users_payments_retrieve
+      operationId: api_users_payments_retrieve
       parameters:
       - in: path
         name: payment_id
@@ -1175,7 +1327,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - users
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -1186,7 +1338,7 @@ paths:
                 $ref: '#/components/schemas/PaymentInformation'
           description: ''
     delete:
-      operationId: users_payments_destroy
+      operationId: api_users_payments_destroy
       parameters:
       - in: path
         name: payment_id
@@ -1202,7 +1354,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - users
+      - api
       security:
       - tokenAuth: []
       responses:
@@ -1210,7 +1362,7 @@ paths:
           description: No response body
   /api/users/{user_id}/payments/register/:
     post:
-      operationId: users_payments_register_create
+      operationId: api_users_payments_register_create
       parameters:
       - in: path
         name: user_id
@@ -1219,7 +1371,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - users
+      - api
       requestBody:
         content:
           application/json:
@@ -1252,18 +1404,26 @@ components:
           readOnly: true
         street:
           type: string
-          maxLength: 60
+          maxLength: 127
         number:
           type: string
           maxLength: 10
+        city:
+          type: string
+          maxLength: 255
         zipcode:
           type: string
           maxLength: 20
         state:
           type: string
-          maxLength: 20
+          maxLength: 2
+        map_image:
+          type: string
+          readOnly: true
       required:
+      - city
       - id
+      - map_image
       - number
       - state
       - street
@@ -1285,7 +1445,7 @@ components:
         capacity:
           type: integer
           maximum: 2147483647
-          minimum: -2147483648
+          minimum: 0
         is_indoor:
           type: boolean
         price_by_hour:
@@ -1295,7 +1455,7 @@ components:
         max_schedule_range_in_days:
           type: integer
           maximum: 2147483647
-          minimum: -2147483648
+          minimum: 0
         sport:
           type: string
           maxLength: 127
@@ -1375,7 +1535,7 @@ components:
         email:
           type: string
           format: email
-          maxLength: 254
+          maxLength: 256
         phone_number:
           type: string
           maxLength: 60
@@ -1403,21 +1563,18 @@ components:
         email:
           type: string
           format: email
-          maxLength: 254
+          maxLength: 256
         phone_number:
           type: string
           maxLength: 60
-        address_id:
-          type: string
-          format: uuid
-          nullable: true
-          readOnly: true
+        address:
+          $ref: '#/components/schemas/Address'
         user:
-          type: string
-          format: uuid
+          allOf:
+          - $ref: '#/components/schemas/UserBaseInfo'
           readOnly: true
       required:
-      - address_id
+      - address
       - email
       - id
       - name
@@ -1449,6 +1606,18 @@ components:
       - court
       - holiday
       - id
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - password
+      - username
     Nested:
       type: object
       properties:
@@ -1458,18 +1627,26 @@ components:
           readOnly: true
         street:
           type: string
-          maxLength: 60
+          maxLength: 127
         number:
           type: string
           maxLength: 10
+        city:
+          type: string
+          maxLength: 255
         zipcode:
           type: string
           maxLength: 20
         state:
           type: string
-          maxLength: 20
+          maxLength: 2
+        map_image:
+          type: string
+          maxLength: 250
       required:
+      - city
       - id
+      - map_image
       - number
       - state
       - street
@@ -1499,16 +1676,22 @@ components:
           readOnly: true
         street:
           type: string
-          maxLength: 60
+          maxLength: 127
         number:
           type: string
           maxLength: 10
+        city:
+          type: string
+          maxLength: 255
         zipcode:
           type: string
           maxLength: 20
         state:
           type: string
-          maxLength: 20
+          maxLength: 2
+        map_image:
+          type: string
+          readOnly: true
     PatchedCourt:
       type: object
       properties:
@@ -1526,7 +1709,7 @@ components:
         capacity:
           type: integer
           maximum: 2147483647
-          minimum: -2147483648
+          minimum: 0
         is_indoor:
           type: boolean
         price_by_hour:
@@ -1536,7 +1719,7 @@ components:
         max_schedule_range_in_days:
           type: integer
           maximum: 2147483647
-          minimum: -2147483648
+          minimum: 0
         sport:
           type: string
           maxLength: 127
@@ -1563,7 +1746,7 @@ components:
         email:
           type: string
           format: email
-          maxLength: 254
+          maxLength: 256
         phone_number:
           type: string
           maxLength: 60
@@ -1593,6 +1776,10 @@ components:
         review:
           type: string
           maxLength: 250
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
     PatchedUserDetail:
       type: object
       properties:
@@ -1635,7 +1822,9 @@ components:
           format: uuid
           readOnly: true
         user:
-          $ref: '#/components/schemas/UserBaseInfo'
+          allOf:
+          - $ref: '#/components/schemas/UserBaseInfo'
+          readOnly: true
         number:
           type: string
           title: Card number
@@ -1688,8 +1877,13 @@ components:
         review:
           type: string
           maxLength: 250
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
       required:
       - court
+      - created_at
       - id
       - review
       - user
@@ -1757,11 +1951,15 @@ components:
           type: string
           format: date-time
           readOnly: true
+        is_active:
+          type: boolean
+          readOnly: true
       required:
       - date_joined
       - email
       - first_name
       - id
+      - is_active
       - last_name
       - password
       - username

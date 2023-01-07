@@ -11,6 +11,7 @@ from courts.serializers import (CourtAvailableSchedulesSerializers,
 from django_filters import rest_framework as filters
 from utils.court_available_hours import list_court_available_hours
 import datetime
+from drf_spectacular.utils import extend_schema
 
 
 class CourtFilter(filters.FilterSet):
@@ -20,6 +21,9 @@ class CourtFilter(filters.FilterSet):
     class Meta:
         model = Court
         fields = "__all__"
+
+
+@extend_schema(tags=['Court'])
 
 class CourtFilterView(generics.ListAPIView):
 
@@ -41,6 +45,10 @@ class CourtFilterView(generics.ListAPIView):
         available_courts = Court.objects.filter(id__in=available_courts_id)
 
         return available_courts
+
+
+@extend_schema(tags=['Court'])
+@extend_schema(description='Only allowed for User with is_owner=true', methods=["POST"])
 
 
 class CourtView(generics.ListCreateAPIView):
@@ -69,6 +77,8 @@ class CourtView(generics.ListCreateAPIView):
         
         return Court.objects.filter(sport_facility=facility)
 
+@extend_schema(tags=['Court'])
+@extend_schema(description='User must be the owner or admin', methods=["PATCH", "PUT", "DELETE"])
 
 class CourtDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication]
@@ -80,6 +90,8 @@ class CourtDetailView(generics.RetrieveUpdateDestroyAPIView):
     lookup_url_kwarg = "court_id"
 
 
+@extend_schema(tags=['Court'])
+
 class CourtAvailableSchedulesView(generics.RetrieveAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -89,6 +101,9 @@ class CourtAvailableSchedulesView(generics.RetrieveAPIView):
     
     lookup_url_kwarg = "court_id"
 
+
+@extend_schema(tags=['Court'])
+@extend_schema(description='User must be the owner or admin', methods=["POST"])
 
 class RegisterNonOperantingDay(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
@@ -107,6 +122,9 @@ class RegisterNonOperantingDay(generics.ListCreateAPIView):
         serializer.save(court=court)
 
 
+@extend_schema(tags=['Court'])
+@extend_schema(description='User must be the owner or admin', methods=["DELETE"])
+
 class DeleteNonOperantingDay(generics.DestroyAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsCourtOwnerOrReadOnly]
@@ -116,6 +134,9 @@ class DeleteNonOperantingDay(generics.DestroyAPIView):
     
     lookup_url_kwarg = "non_operanting_day_id"
 
+
+@extend_schema(tags=['Court'])
+@extend_schema(description='User must be the owner or admin', methods=["POST"])
 
 class RegisterHolidayView(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
@@ -133,6 +154,9 @@ class RegisterHolidayView(generics.ListCreateAPIView):
 
         serializer.save(court=court)
 
+
+@extend_schema(tags=['Court'])
+@extend_schema(description='User must be the owner or admin', methods=["DELETE"])
 
 class DeleteHolidayView(generics.DestroyAPIView):
     authentication_classes = [TokenAuthentication]

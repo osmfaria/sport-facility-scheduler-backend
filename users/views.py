@@ -12,16 +12,22 @@ from users.models import User
 from users.permissions import IsOwnerOrAdmin
 from users.serializers import (LoginSerializer, UserDetailSerializer,
                                UserSerializer)
-import ipdb
+from drf_spectacular.utils import extend_schema
+
+
+@extend_schema(tags=['User'])
 
 class ListUsersView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
+@extend_schema(tags=['User'])
 
 class RegisterUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -36,7 +42,16 @@ class RegisterUserView(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
+@extend_schema(description='Confirmation email must be activated before first login')
+
 class LoginView(APIView):
+    # added for auto generated documentation only
+    serializer_class = LoginSerializer
+    queryset = User.objects.all()
+    # -------------------------------------------
+
+    @extend_schema(tags=['User'])
+
     def post(self, request: Request) -> Response:
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -49,6 +64,9 @@ class LoginView(APIView):
         return Response({"detail": "invalid username or password"}, status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(tags=['User'])
+@extend_schema(description='Must be the account owner or admin', methods=["DELETE", "PATCH", "PUT"])
+
 class UserDetailsView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsOwnerOrAdmin]
@@ -56,6 +74,8 @@ class UserDetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserDetailSerializer
     lookup_url_kwarg = 'user_id'
+
+
 
 
 def activate(request, uidb64, token):

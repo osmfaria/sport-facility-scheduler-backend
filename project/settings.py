@@ -111,14 +111,8 @@ else:
 				        "NAME": env("POSTGRES_DB"),
 				        "USER": env("POSTGRES_USER"),
 				        "PASSWORD": env("POSTGRES_PASSWORD"),
-				        # "HOST": "localhost",
-				        # Nome do serviço rodando o postgres no docker compose
 				        "HOST": "db",
-				        # porta rodando internamente na network do compose
 				        "PORT": 5432,
-				        # "PORT": 5432,
-				        # Postgres do container do Docker (erro, o postgres está em outro container)
-				        # "PORT": 5434,
 				    }
     }
 
@@ -182,6 +176,7 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Court Manager',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    'DESCRIPTION': 'This is the court scheduler RESTful API. It allow sport facility owners to register their facilities and add courts to it. Users are able to schedule a time slot to use the court. Holidays and non operating days may also be customized per court'
 }
 
 EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'

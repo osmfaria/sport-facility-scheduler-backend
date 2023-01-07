@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
-from utils.google_address import get_google_address
 from addresses.permissions import IsFacilityOwner
-from .models import Address
 from .serializers import AddressSerializer
 from facilities.models import Facility
-from rest_framework.exceptions import ValidationError
 from rest_framework.authentication import TokenAuthentication
+from drf_spectacular.utils import extend_schema
+
+@extend_schema(tags=['Address'])
+@extend_schema(description='User must be the owner or admin', methods=["PATCH", "PUT"])
 
 class AddressView(generics.RetrieveUpdateAPIView):
     serializer_class = AddressSerializer

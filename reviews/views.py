@@ -5,6 +5,12 @@ from reviews.permissions import ReviewCustomPermission
 from reviews.serializers import ReviewSerializer
 from reviews.models import Review
 from courts.models import Court
+from drf_spectacular.utils import extend_schema
+
+
+@extend_schema(tags=['Reviews'])
+@extend_schema(description='Must be the review author or admin', methods=["DELETE", "PATCH", "PUT"])
+@extend_schema(exclude=True, methods=["PUT"])
 
 
 class ReviewView(generics.ListCreateAPIView, generics.UpdateAPIView, generics.DestroyAPIView):

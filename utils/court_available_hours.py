@@ -49,7 +49,6 @@ def get_booked_hours(input_date, obj):
 
 
 def list_court_available_hours(input_date, obj):
-    # ipdb.set_trace()
     today = datetime.now()
 
     starting_hour = get_starting_hour(input_date, obj, today)

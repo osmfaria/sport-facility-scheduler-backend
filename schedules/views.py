@@ -11,7 +11,10 @@ from schedules.models import Schedule
 from schedules.serializers import ScheduleSerializer
 from .permissions import IsFacilityOwner, IsOwnerOrFacilityOwnerOrAdmin
 from .functions import sendmail
+from drf_spectacular.utils import extend_schema
 
+
+@extend_schema(tags=['Schedules'])
 
 class ScheduleFilterView(generics.ListAPIView):
     authentication_classes = [TokenAuthentication]
@@ -31,6 +34,8 @@ class ScheduleFilterView(generics.ListAPIView):
 
         return Schedule.objects.filter(court=court, datetime__date__range=[initial_date, final_date]).order_by("datetime")
 
+
+@extend_schema(tags=['Schedules'])
 
 class ScheduleCreateView(generics.CreateAPIView):
     authentication_classes = [TokenAuthentication]
@@ -107,6 +112,8 @@ class ScheduleCreateView(generics.CreateAPIView):
 
         return Schedule.objects.filter(court=court).order_by("datetime") 
 
+
+@extend_schema(tags=['Schedules'])
 
 class CancelScheduleView(generics.DestroyAPIView):
     authentication_classes = [TokenAuthentication]
