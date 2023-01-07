@@ -1,4 +1,4 @@
-#!/home/osmar/Kenzie/M5/capstone/m5-capstone/venv/bin/python
+#!/home/osmar/Kenzie/projects/sport-facility-api/sport-facility-scheduler-backend/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

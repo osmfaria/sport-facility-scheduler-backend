@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/osmar/Kenzie/M5/capstone/m5-capstone/venv"
+VIRTUAL_ENV="/home/osmar/Kenzie/projects/sport-facility-api/sport-facility-scheduler-backend/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
