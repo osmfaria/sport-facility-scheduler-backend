@@ -1,4 +1,3 @@
-[![GitHub package.json version](https://img.shields.io/github/package-json/v/osmfaria/Mshop-backend)](https://img.shields.io/github/package-json/v/osmfaria/Mshop-backend)
 
 ## :calendar: Court Scheduler
 
@@ -25,7 +24,7 @@ General users can then look for the courts and schedule time slots according to 
 
 ## 💻 Tech stack
 
-  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" /> <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" /> <img src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white" /> <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white" /> <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green" /> <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" /> <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white" /> 
   
 ## ER Diagram
 
