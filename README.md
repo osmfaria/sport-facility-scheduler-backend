@@ -38,6 +38,9 @@ General users can then look for the courts and schedule time slots according to 
 
 <img src="./diagram-er.png" />
 
+## :telescope: Upcoming updates
+
+- [ ] Build a frontend for the application;
 
 ## :memo: License
 
