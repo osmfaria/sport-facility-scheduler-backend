@@ -30,10 +30,6 @@ General users can then look for the courts and schedule time slots according to 
 
 <img src="./diagram-er.png" />
 
-## 🔗 Links
-
-- App frontend [repo](https://github.com/osmfaria/Mshop-frontend);
-- Deployed [app](https://mshop-ecommerce.vercel.app/).
 
 ## :memo: License
 
