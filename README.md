@@ -22,6 +22,14 @@ General users can then look for the courts and schedule time slots according to 
 - Once the container is up and running, the configured port is 8000, check it running on `http://localhost:8000/api/doc/`
 - Send requests `to http://localhost:8000/api/***` based on the [docs](https://court-scheduler.herokuapp.com/api/doc/).
 
+💭 features:\
+\
+:heavy_check_mark: Email for activating new accounts\
+:heavy_check_mark: Email confirmation with static map location when scheduling a time slot in a court\
+:heavy_check_mark: Email confimation for cancelations\
+:heavy_check_mark: Allows to add holidays, regular days off\
+
+
 ## 💻 Tech stack
 
   <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green" /> <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" /> <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white" /> 
