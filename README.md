@@ -24,10 +24,10 @@ General users can then look for the courts and schedule time slots according to 
 
 ## 💭 features
 
-:heavy_check_mark: Email for activating new accounts\
-:heavy_check_mark: Email confirmation with static map location when scheduling a time slot in a court\
-:heavy_check_mark: Email confimation for cancelations\
-:heavy_check_mark: Allows to add holidays, regular days off\
+:heavy_check_mark: Email for activating new accounts;\
+:heavy_check_mark: Email confirmation with static map location when scheduling a time slot in a court;\
+:heavy_check_mark: Email confimation for cancelations;\
+:heavy_check_mark: Add holidays, regular days off to courts.
 
 
 ## 💻 Tech stack
