@@ -2,12 +2,13 @@
  
 # :shopping: Mshop
 
-This is the backend with a RESTful API of an ecommerce created to allow users to buy and sell cars and motorcycles. 
+This is the backend with a RESTful API of an sport-facility scheduler. It allows an user  to register their sport facility and add sport courts to it. 
+General users can then look for the courts and schedule time slots according to the availability. 
 
 
 
-> Link for deployed [API](https://motors-ecommerce-api.herokuapp.com/) \
-> Check the [documentation](https://motors-ecommerce-api.herokuapp.com/api-docs/) for proper use
+> Link for deployed [API](https://court-scheduler.herokuapp.com/api/) \
+> Check the [documentation](https://court-scheduler.herokuapp.com/api/doc/) for proper use
 
 ## :toolbox: Tools required
 
@@ -19,8 +20,8 @@ This is the backend with a RESTful API of an ecommerce created to allow users to
 
 - Clone this repo;
 - On the root folder execute `docker compose up`;
-- Once the container is up and running, the configured port is 5000, check it running on `http://localhost:5000/api-docs/`
-- Send requests `to http://localhost:5000/***` based on the [docs](https://motors-ecommerce-api.herokuapp.com/api-docs/).
+- Once the container is up and running, the configured port is 8000, check it running on `http://localhost:8000/api/doc/`
+- Send requests `to http://localhost:8000/api/***` based on the [docs](https://court-scheduler.herokuapp.com/api/doc/).
 
 ## 💻 Tech stack
 
