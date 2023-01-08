@@ -1,8 +1,8 @@
 [![GitHub package.json version](https://img.shields.io/github/package-json/v/osmfaria/Mshop-backend)](https://img.shields.io/github/package-json/v/osmfaria/Mshop-backend)
- 
-# :shopping: Mshop
 
-This is the backend with a RESTful API of an sport-facility scheduler. It allows an user  to register their sport facility and add sport courts to it. 
+## :calendar: Court Scheduler
+
+This is the backend with a RESTful API of an sport-facility/court scheduler. It allows an user  to register their sport facility and add sport courts to it. 
 General users can then look for the courts and schedule time slots according to the availability. 
 
 
