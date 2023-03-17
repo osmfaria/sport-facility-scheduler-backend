@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'reviews',
     'schedules',
     'django_filters',
+    'corsheaders',
 ]
 
 
@@ -74,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -95,6 +97,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'project.wsgi.application'
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Database
