@@ -94,7 +94,6 @@ class CourtDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class CourtAvailableSchedulesView(generics.RetrieveAPIView):
     authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
 
     queryset = Court.objects.all()
     serializer_class = CourtAvailableSchedulesSerializers

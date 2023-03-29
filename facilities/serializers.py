@@ -46,4 +46,4 @@ class DetailedFacilitySerializer(serializers.ModelSerializer):
 class FacilityBaseInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Facility
-        fields = ["name"]
+        fields = ["id", "name"]
