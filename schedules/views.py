@@ -49,6 +49,7 @@ class ScheduleCreateView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         logger.info(f"data received {request.data}")
+        logger.info(f"user vindo da equest {request.user}")
 
         court_id = self.kwargs[self.lookup_url_kwarg]
         court = Court.objects.get(id=court_id)
