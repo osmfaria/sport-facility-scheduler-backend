@@ -107,6 +107,14 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
 ]
 
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',  # Replace this with your frontend domain
+    # Add more domains as needed
+]
+
+
+
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
