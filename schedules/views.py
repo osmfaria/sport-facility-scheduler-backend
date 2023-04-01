@@ -51,6 +51,9 @@ class ScheduleCreateView(generics.CreateAPIView):
         logger.info(f"data received {request.data}")
         logger.info(f"user vindo da equest {request.user}")
 
+        print(request.META)
+        print(request.META.get('HTTP_AUTHORIZATION'))
+
         court_id = self.kwargs[self.lookup_url_kwarg]
         court = Court.objects.get(id=court_id)
 
