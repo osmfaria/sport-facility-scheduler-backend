@@ -39,7 +39,6 @@ class ScheduleFilterView(generics.ListAPIView):
 
 class ScheduleCreateView(generics.CreateAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsFacilityOwner]
 
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer

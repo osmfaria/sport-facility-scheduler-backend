@@ -4,9 +4,6 @@ from courts.models import Court
 
 class IsFacilityOwner(permissions.BasePermission):
     def has_permission(self, request, view):
-        if request.method == "POST":
-            return request.user.is_authenticated
-
         court_id = view.kwargs["court_id"]
         court = Court.objects.get(id=court_id)
 
