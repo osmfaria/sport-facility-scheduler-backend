@@ -10,8 +10,7 @@ from .token import AccountActivationTokenGenerator
 from django.http import HttpResponse, HttpResponseRedirect
 from users.models import User
 from users.permissions import IsOwnerOrAdmin
-from users.serializers import (LoginSerializer, UserDetailSerializer,
-                               UserSerializer)
+from users.serializers import (LoginSerializer, UserDetailSerializer, UserSerializer)
 from drf_spectacular.utils import extend_schema
 
 
@@ -59,7 +58,7 @@ class LoginView(APIView):
 
         if user:
             token,_ = Token.objects.get_or_create(user=user)
-            return Response({"token": token.key}, status.HTTP_200_OK)
+            return Response({"token": token.key, "user": {user}}, status.HTTP_200_OK)
 
         return Response({"detail": "invalid username or password"}, status.HTTP_400_BAD_REQUEST)
 
