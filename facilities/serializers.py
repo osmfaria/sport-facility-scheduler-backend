@@ -3,7 +3,7 @@ from rest_framework import serializers
 from addresses.models import Address
 from users.serializers import UserBaseInfoSerializer
 from .models import Facility
-from addresses.serializers import AddressSerializer, AddressBaseSerializer
+from addresses.serializers import AddressSerializer
 from utils.google_address import get_google_address
 
 
@@ -14,8 +14,9 @@ class FacilitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Facility
-        fields = ["id","name", "email", "phone_number", "address", "user"]
+        fields = ["id","name", "email", "phone_number", "address", "user", "courts"]
         read_only_fields = ["user"]
+        depth = 2
 
 
     def create(self, validated_data):
