@@ -1,23 +1,32 @@
-from rest_framework.exceptions import ValidationError
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+
 from addresses.models import Address
-from users.serializers import UserBaseInfoSerializer
-from .models import Facility
 from addresses.serializers import AddressSerializer
+from users.serializers import UserBaseInfoSerializer
 from utils.google_address import get_google_address
+
+from .models import Facility
+
+
+class FacilityBaseInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Facility
+        fields = ["id", "name"]
 
 
 class FacilitySerializer(serializers.ModelSerializer):
+    from courts.serializers import CourtByFacilitySerializer
+
     address = AddressSerializer()
     user = UserBaseInfoSerializer(read_only=True)
-
+    courts = CourtByFacilitySerializer(many=True)
 
     class Meta:
         model = Facility
-        fields = ["id","name", "email", "phone_number", "address", "user", "courts"]
+        fields = ["id", "name", "email", "phone_number", "address", "user", "courts"]
         read_only_fields = ["user"]
         depth = 2
-
 
     def create(self, validated_data):
         address = validated_data.pop("address")
@@ -34,7 +43,7 @@ class FacilitySerializer(serializers.ModelSerializer):
 
         return facility
 
-        
+
 class DetailedFacilitySerializer(serializers.ModelSerializer):
     user = UserBaseInfoSerializer(read_only=True)
 
@@ -42,9 +51,3 @@ class DetailedFacilitySerializer(serializers.ModelSerializer):
         model = Facility
         fields = "__all__"
         depth = 1
-
-
-class FacilityBaseInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Facility
-        fields = ["id", "name"]
