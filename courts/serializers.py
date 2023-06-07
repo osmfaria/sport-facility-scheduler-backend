@@ -23,7 +23,7 @@ def get_week_day(day):
 class CourtByFacilitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Court
-        fields = ["id", "name", "max_schedule_range_in_days"]
+        fields = ["id", "name", "max_schedule_range_in_days", "opening_hour", "closing_hour"]
 
 
 class CourtSerializer(serializers.ModelSerializer):
