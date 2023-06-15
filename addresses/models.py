@@ -10,5 +10,5 @@ class Address(models.Model):
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=2)
     zipcode = models.CharField(max_length=20)
-    country = models.CharField(max_length=30, default="Canada")
+    country = models.CharField(max_length=30)
     map_image = models.CharField(max_length=250)
