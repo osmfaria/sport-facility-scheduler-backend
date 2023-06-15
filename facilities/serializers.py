@@ -20,12 +20,12 @@ class FacilitySerializer(serializers.ModelSerializer):
 
     address = AddressSerializer()
     user = UserBaseInfoSerializer(read_only=True)
-    courts = CourtByFacilitySerializer(many=True)
+    courts = CourtByFacilitySerializer(many=True, read_only=True)
 
     class Meta:
         model = Facility
         fields = ["id", "name", "email", "phone_number", "address", "user", "courts"]
-        read_only_fields = ["user"]
+        read_only_fields = ["user", "courts"]
         depth = 2
 
     def create(self, validated_data):
