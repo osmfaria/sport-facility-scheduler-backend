@@ -34,7 +34,7 @@ class FacilitySerializer(serializers.ModelSerializer):
         repeated_address = Address.objects.filter(**address).exists()
 
         if repeated_address:
-            raise ValidationError({"detail": "address already exists."})
+            raise ValidationError({"address": "address already exists."})
 
         map_address = get_google_address(address)
 
