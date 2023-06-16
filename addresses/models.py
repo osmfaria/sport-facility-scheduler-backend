@@ -11,5 +11,5 @@ class Address(models.Model):
     state = models.CharField(max_length=2)
     zipcode = models.CharField(max_length=20)
     country = models.CharField(max_length=30)
-    timezone = models.CharField(max_length=40, default="America/Vancouver")
+    timezone = models.CharField(max_length=40)
     map_image = models.CharField(max_length=250)
