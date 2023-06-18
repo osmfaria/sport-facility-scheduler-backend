@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import pytz
 
 from courts.models import Holiday, NonOperatingDay
 from schedules.models import Schedule
@@ -62,16 +63,18 @@ def get_booked_hours(input_date, obj):
 
 
 def list_court_available_hours(input_date, obj):
-    today = datetime.now()
+    timezone_name = obj.sport_facility.address.timezone
+    timezone = pytz.timezone(timezone_name)
 
-    starting_hour = get_starting_hour(input_date, obj, today)
+    local_datetime = datetime.now(timezone)
+    starting_hour = get_starting_hour(input_date, obj, local_datetime)
 
     booked_hours = get_booked_hours(input_date, obj)
 
-    if check_is_date_in_the_past(input_date, obj, today):
+    if check_is_date_in_the_past(input_date, obj, local_datetime):
         return {"detail": "You can't schedule in the past... yet"}
 
-    if not check_court_is_open(input_date, obj, today):
+    if not check_court_is_open(input_date, obj, local_datetime):
         return {"detail": "court is closed"}
 
     return [
