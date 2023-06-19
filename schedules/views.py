@@ -12,9 +12,6 @@ from schedules.serializers import ScheduleSerializer
 from .permissions import IsFacilityOwner, IsOwnerOrFacilityOwnerOrAdmin
 from .functions import sendmail
 from drf_spectacular.utils import extend_schema
-import logging
-
-logger = logging.getLogger(__name__)
 
 @extend_schema(tags=['Schedules'])
 
@@ -48,11 +45,6 @@ class ScheduleCreateView(generics.CreateAPIView):
     lookup_url_kwarg = "court_id"
 
     def create(self, request, *args, **kwargs):
-        logger.info(f"data received {request.data}")
-        logger.info(f"user vindo da equest {request.user}")
-
-        print(request.META)
-        print(request.META.get('HTTP_AUTHORIZATION'))
 
         court_id = self.kwargs[self.lookup_url_kwarg]
         court = Court.objects.get(id=court_id)
