@@ -2,6 +2,8 @@ from django_filters import rest_framework as filters
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.response import Response
+from rest_framework import status
 
 from facilities.models import Facility
 
@@ -59,3 +61,13 @@ class FacilityDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DetailedFacilitySerializer
     queryset = Facility.objects.all()
     lookup_url_kwarg = "sport_facility_id"
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        address_instance = instance.address
+
+        if address_instance is not None:
+            address_instance.delete()
+
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)

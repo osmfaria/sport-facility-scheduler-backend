@@ -30,7 +30,6 @@ class FacilitySerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         address = validated_data.pop("address")
-
         repeated_address = Address.objects.filter(**address).exists()
 
         if repeated_address:
@@ -46,8 +45,11 @@ class FacilitySerializer(serializers.ModelSerializer):
 
 class DetailedFacilitySerializer(serializers.ModelSerializer):
     user = UserBaseInfoSerializer(read_only=True)
+    address = AddressSerializer()
 
     class Meta:
         model = Facility
         fields = "__all__"
         depth = 1
+    
+    
