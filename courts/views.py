@@ -1,11 +1,13 @@
 import datetime
 
+import ipdb
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django_filters import rest_framework as filters
 from drf_spectacular.utils import extend_schema
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.response import Response
 
 from courts.models import Court, Holiday, NonOperatingDay
 from courts.serializers import (
@@ -124,7 +126,11 @@ class RegisterNonOperantingDay(generics.ListCreateAPIView):
         court_id = self.kwargs[self.lookup_url_kwarg]
         court = get_object_or_404(Court, id=court_id)
 
-        serializer.save(court=court)
+        regular_day_off = serializer.validated_data["regular_day_off"]
+
+        NonOperatingDay.objects.update_or_create(
+            court=court, defaults={"regular_day_off": regular_day_off}
+        )
 
 
 @extend_schema(tags=["Court"])
@@ -136,7 +142,14 @@ class DeleteNonOperantingDay(generics.DestroyAPIView):
     queryset = NonOperatingDay.objects.all()
     serializer_class = NonOperatingDaysSerializer
 
-    lookup_url_kwarg = "non_operanting_day_id"
+    lookup_url_kwarg = "court_id"
+
+    def destroy(self, request, *args, **kwargs):
+        court_id = self.kwargs[self.lookup_url_kwarg]
+        court = get_object_or_404(Court, id=court_id)
+        instance = get_object_or_404(NonOperatingDay, court=court)
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @extend_schema(tags=["Court"])

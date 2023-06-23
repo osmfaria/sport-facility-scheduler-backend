@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 
 class DayOfTheWeek(models.TextChoices):
@@ -11,13 +12,13 @@ class DayOfTheWeek(models.TextChoices):
     FRIDAY = "FRIDAY",
     SATURDAY = "SATURDAY",
     SUNDAY = "SUNDAY",
-    DEFAULT = "DEFAULT"
 
 
 class NonOperatingDay(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    court = models.ForeignKey("courts.Court", on_delete=models.CASCADE, related_name="non_operating_days")
-    regular_day_off = models.CharField(max_length=9, choices=DayOfTheWeek.choices, default=DayOfTheWeek.DEFAULT)
+    court = models.OneToOneField("courts.Court", on_delete=models.CASCADE, related_name="non_operating_days")
+    regular_day_off = ArrayField(models.CharField(max_length=9, choices=DayOfTheWeek.choices, default=list))
+
 
 
 class Holiday(models.Model):
