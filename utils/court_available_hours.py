@@ -4,8 +4,10 @@ import pytz
 from courts.models import Holiday, NonOperatingDay
 from schedules.models import Schedule
 
+import ipdb
 
-def get_week_day(day):
+
+def get_week_day_name(day):
     days_of_the_week = [
         "MONDAY",
         "TUESDAY",
@@ -32,11 +34,12 @@ def check_date_in_an_available_period(input_date, obj, today):
 def check_court_is_open(input_date, obj, today):
     court_id = vars(obj)["id"]
 
-    weekday = input_date.weekday()
+    weekday = get_week_day_name(input_date.weekday())
 
     non_operating_day = NonOperatingDay.objects.filter(
-        court=court_id, regular_day_off=get_week_day(weekday)
+        court=court_id, regular_day_off__contains=[weekday]
     )
+
     holiday = Holiday.objects.filter(court_id=court_id, holiday=input_date)
 
     is_after_hours = (input_date.date() == today.date()) and (
